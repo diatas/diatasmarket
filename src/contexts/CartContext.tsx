@@ -33,6 +33,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const { user } = useAuth();
 
   const fetchCart = async () => {
+    if (!supabase) {
+      setCart([]);
+      setLoading(false);
+      return;
+    }
+
     if (!user) {
       setCart([]);
       setLoading(false);
@@ -58,7 +64,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [user]);
 
   const addToCart = async (productId: string, quantity: number, size: string, color: string) => {
-    if (!user) return;
+    if (!supabase || !user) return;
 
     const { error } = await supabase
       .from('cart')
@@ -78,6 +84,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const updateQuantity = async (itemId: string, quantity: number) => {
+    if (!supabase) return;
+
     if (quantity <= 0) {
       await removeFromCart(itemId);
       return;
@@ -94,6 +102,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const removeFromCart = async (itemId: string) => {
+    if (!supabase) return;
+
     const { error } = await supabase
       .from('cart')
       .delete()
@@ -105,7 +115,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   };
 
   const clearCart = async () => {
-    if (!user) return;
+    if (!supabase || !user) return;
 
     const { error } = await supabase
       .from('cart')

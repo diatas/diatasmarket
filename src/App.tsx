@@ -7,7 +7,7 @@ import { AuthModal } from './components/AuthModal';
 import { CheckoutModal } from './components/CheckoutModal';
 import { useAuth } from './contexts/AuthContext';
 import { useCart } from './contexts/CartContext';
-import { supabase } from './lib/supabase';
+import { supabase, isSupabaseConfigured } from './lib/supabase';
 
 interface Product {
   id: string;
@@ -39,11 +39,18 @@ function App() {
   const { user } = useAuth();
 
   useEffect(() => {
+    if (!supabase) {
+      setLoading(false);
+      return;
+    }
+
     fetchCategories();
     fetchProducts();
   }, [selectedCategory]);
 
   const fetchCategories = async () => {
+    if (!supabase) return;
+
     const { data } = await supabase
       .from('categories')
       .select('*')
@@ -55,6 +62,12 @@ function App() {
   };
 
   const fetchProducts = async () => {
+    if (!supabase) {
+      setProducts([]);
+      setLoading(false);
+      return;
+    }
+
     setLoading(true);
     let query = supabase
       .from('products')
@@ -155,6 +168,16 @@ function App() {
           selectedCategory={selectedCategory}
           onSelectCategory={setSelectedCategory}
         />
+
+        {!isSupabaseConfigured && (
+          <div className="mt-6 rounded-2xl border border-amber-200 bg-amber-50 p-4 text-amber-900 shadow-sm">
+            <p className="font-semibold">Configuration Supabase manquante</p>
+            <p className="text-sm text-amber-800">
+              Ajoutez les variables <code>VITE_SUPABASE_URL</code> et <code>VITE_SUPABASE_ANON_KEY</code>
+              pour activer le chargement des produits et des catégories.
+            </p>
+          </div>
+        )}
 
         {loading ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" aria-label="Chargement des produits">
