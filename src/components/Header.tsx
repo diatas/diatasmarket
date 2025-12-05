@@ -14,14 +14,14 @@ export function Header({ onAuthClick, onCartClick }: HeaderProps) {
   const cartItemsCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <header className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white shadow-lg sticky top-0 z-50">
+    <header className="bg-gradient-to-r from-sky-600 via-sky-500 to-blue-600 text-white shadow-lg sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <Store className="w-8 h-8" />
             <div>
               <h1 className="text-2xl font-bold tracking-tight">DIATAS MARKET</h1>
-              <p className="text-xs text-emerald-100">Mode & Chaussures</p>
+              <p className="text-xs text-sky-100">Mode & Chaussures</p>
             </div>
           </div>
 
@@ -49,7 +49,7 @@ export function Header({ onAuthClick, onCartClick }: HeaderProps) {
             ) : (
               <button
                 onClick={onAuthClick}
-                className="flex items-center space-x-2 bg-white text-emerald-600 px-4 py-2 rounded-lg font-semibold hover:bg-emerald-50 transition-colors"
+                className="flex items-center space-x-2 bg-white text-sky-600 px-4 py-2 rounded-lg font-semibold hover:bg-sky-50 transition-colors shadow"
               >
                 <User className="w-5 h-5" />
                 <span className="hidden sm:inline">Connexion</span>

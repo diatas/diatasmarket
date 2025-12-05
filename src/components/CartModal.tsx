@@ -18,7 +18,7 @@ export function CartModal({ isOpen, onClose, onCheckout }: CartModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-end">
-      <div className="bg-white w-full max-w-md h-full overflow-y-auto shadow-2xl animate-slide-in">
+      <div className="bg-white w-full max-w-md h-full overflow-y-auto shadow-2xl animate-slide-in border-l border-sky-50">
         <div className="sticky top-0 bg-white border-b border-gray-200 p-6 z-10">
           <div className="flex items-center justify-between">
             <h2 className="text-2xl font-bold text-gray-800 flex items-center space-x-2">
@@ -42,9 +42,19 @@ export function CartModal({ isOpen, onClose, onCheckout }: CartModalProps) {
             </div>
           ) : (
             <>
+              <div className="bg-sky-50 border border-sky-100 rounded-xl p-4 mb-5 flex items-start space-x-3">
+                <div className="h-10 w-10 rounded-full bg-white text-sky-600 flex items-center justify-center font-bold shadow-inner">
+                  %
+                </div>
+                <div className="text-sm text-gray-700">
+                  <p className="font-semibold text-gray-800">Livraison rapide & retours simples</p>
+                  <p className="text-gray-600">Suivi en temps réel et remboursement sous 30 jours si besoin.</p>
+                </div>
+              </div>
+
               <div className="space-y-4 mb-6">
                 {cart.map((item) => (
-                  <div key={item.id} className="bg-gray-50 rounded-lg p-4 flex space-x-4">
+                  <div key={item.id} className="bg-gray-50 rounded-lg p-4 flex space-x-4 border border-gray-100">
                     <img
                       src={item.product?.image_url}
                       alt={item.product?.name}
@@ -55,7 +65,7 @@ export function CartModal({ isOpen, onClose, onCheckout }: CartModalProps) {
                       <p className="text-sm text-gray-600 mb-2">
                         {item.size} • {item.color}
                       </p>
-                      <p className="font-bold text-emerald-600">
+                      <p className="font-bold text-sky-700">
                         {((item.product?.price || 0) * item.quantity).toLocaleString()} FCFA
                       </p>
                     </div>
@@ -89,15 +99,24 @@ export function CartModal({ isOpen, onClose, onCheckout }: CartModalProps) {
               <div className="border-t border-gray-200 pt-6">
                 <div className="flex justify-between items-center mb-6">
                   <span className="text-xl font-bold text-gray-800">Total:</span>
-                  <span className="text-2xl font-bold text-emerald-600">
+                  <span className="text-2xl font-bold text-sky-700">
                     {total.toLocaleString()} FCFA
                   </span>
+                </div>
+
+                <div className="bg-sky-50 border border-sky-100 rounded-xl p-4 mb-4 text-sm text-gray-700">
+                  <p className="font-semibold text-gray-800 mb-1">Bon à savoir</p>
+                  <ul className="list-disc list-inside space-y-1 text-gray-600">
+                    <li>Livraison gratuite dès 50.000 FCFA</li>
+                    <li>Retours simplifiés sous 30 jours</li>
+                    <li>Paiement sécurisé par carte ou mobile money</li>
+                  </ul>
                 </div>
 
                 {user ? (
                   <button
                     onClick={onCheckout}
-                    className="w-full bg-emerald-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-emerald-700 transition-colors shadow-lg"
+                    className="w-full bg-sky-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-sky-700 transition-colors shadow-lg"
                   >
                     Commander
                   </button>
