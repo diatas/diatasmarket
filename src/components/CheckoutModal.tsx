@@ -102,7 +102,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4 overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-2xl w-full p-8 relative my-8">
+      <div className="bg-white rounded-2xl max-w-2xl w-full p-8 relative my-8 border border-sky-50 shadow-2xl">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 p-2 hover:bg-gray-100 rounded-lg transition-colors"
@@ -113,7 +113,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Finaliser la commande</h2>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-sky-50 rounded-lg p-4 border border-sky-100">
             <h3 className="font-semibold text-gray-800 mb-3">Récapitulatif</h3>
             <div className="space-y-2">
               {cart.map((item) => (
@@ -128,7 +128,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
               ))}
               <div className="border-t border-gray-200 pt-2 mt-2 flex justify-between">
                 <span className="font-bold text-gray-800">Total:</span>
-                <span className="font-bold text-emerald-600 text-lg">
+                <span className="font-bold text-sky-700 text-lg">
                   {total.toLocaleString()} FCFA
                 </span>
               </div>
@@ -144,7 +144,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                 onChange={(e) => setName(e.target.value)}
                 required
                 placeholder="Nom complet"
-                className="px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none"
+                className="px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none"
               />
               <input
                 type="tel"
@@ -152,7 +152,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                 onChange={(e) => setPhone(e.target.value)}
                 required
                 placeholder="Téléphone"
-                className="px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none"
+                className="px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none"
               />
               <input
                 type="text"
@@ -160,7 +160,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                 onChange={(e) => setAddress(e.target.value)}
                 required
                 placeholder="Adresse"
-                className="px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none md:col-span-2"
+                className="px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none md:col-span-2"
               />
               <input
                 type="text"
@@ -168,7 +168,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                 onChange={(e) => setCity(e.target.value)}
                 required
                 placeholder="Ville"
-                className="px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-emerald-600 focus:border-transparent outline-none md:col-span-2"
+                className="px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-sky-500 focus:border-transparent outline-none md:col-span-2"
               />
             </div>
           </div>
@@ -185,11 +185,11 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
                     onClick={() => setSelectedPayment(method.id)}
                     className={`flex items-center space-x-3 p-4 rounded-lg border-2 transition-all ${
                       selectedPayment === method.id
-                        ? 'border-emerald-600 bg-emerald-50'
+                        ? 'border-sky-600 bg-sky-50 shadow'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
-                    <Icon className="w-6 h-6 text-emerald-600" />
+                    <Icon className="w-6 h-6 text-sky-600" />
                     <span className="font-medium text-gray-800">{method.name}</span>
                   </button>
                 );
@@ -200,7 +200,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           <button
             type="submit"
             disabled={loading || !selectedPayment}
-            className="w-full bg-emerald-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-sky-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-sky-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow"
           >
             {loading ? 'Traitement...' : 'Confirmer la commande'}
           </button>
