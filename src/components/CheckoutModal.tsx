@@ -2,7 +2,7 @@ import { X, CreditCard, Smartphone, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
-import { supabase } from '../lib/supabase';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
 
 interface CheckoutModalProps {
   isOpen: boolean;
@@ -39,6 +39,10 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
     setLoading(true);
 
     try {
+      if (!supabase) {
+        throw new Error('Supabase n’est pas configuré.');
+      }
+
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .insert({
@@ -110,7 +114,15 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
           <X className="w-5 h-5" />
         </button>
 
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Finaliser la commande</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-2">Finaliser la commande</h2>
+        <p className="text-sm text-gray-500 mb-4">Livraison sécurisée avec suivi email.</p>
+
+        {!isSupabaseConfigured && (
+          <div className="mb-6 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+            <p className="font-semibold">Supabase n’est pas configuré.</p>
+            <p>Ajoutez vos variables d’environnement pour activer la création de commande.</p>
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="bg-sky-50 rounded-lg p-4 border border-sky-100">
@@ -199,7 +211,7 @@ export function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
 
           <button
             type="submit"
-            disabled={loading || !selectedPayment}
+            disabled={loading || !selectedPayment || !isSupabaseConfigured}
             className="w-full bg-sky-600 text-white py-4 rounded-lg font-bold text-lg hover:bg-sky-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow"
           >
             {loading ? 'Traitement...' : 'Confirmer la commande'}
